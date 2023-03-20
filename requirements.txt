@@ -1,3 +1,4 @@
 qrcode
 Flask
 opencv-python
+Gunicorn
