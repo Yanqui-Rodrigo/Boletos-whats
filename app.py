@@ -51,9 +51,10 @@ def webhook():
 
 @app.route('/post_to_webhook', methods=['POST'])
 def post_to_webhook():
-    data = {'name': 'John', 'age': 30}
+    data = {'message ': '/invi 2017059555 Rodrigo Yanqui', 'numero': 30}
+    
     headers = {'Content-type': 'application/json'}
-    response = request.post('http://localhost:5000/webhook', json=data, headers=headers)
+    response = request.post('https://boletos.onrender.com/webhook', json=data, headers=headers)
     return "ok"
 
 if __name__ == '__main__':
