@@ -1,12 +1,12 @@
 import cv2
 import qrcode
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 
 #CODIGO FLASK
 app = Flask(__name__)
 @app.route('/')
 def hello_world():
-    return 'Hola CHATBOT!'
+    return render_template("index.html")
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
@@ -20,7 +20,7 @@ def webhook():
     nombre = ' '.join(datos[2:])  # 'Ana Cotrado Marino'
 
     #CODIGO QR
-    input = data
+    input = 'https://boletos.onrender.com/boleto/'+datos[1]
     qr = qrcode.QRCode(version=1,box_size=10,border=2)
     qr.add_data(input)
     qr.make(fit=True)
@@ -44,7 +44,7 @@ def webhook():
     filas,columnas,canales = codigoqr.shape
     print(filas,columnas)
     fondo[1200:filas+1200,390:columnas+390]=codigoqr
-    cv2.imwrite(id_usuario+'.jpg',fondo)
+    cv2.imwrite('static/images/'+id_usuario+'.png',fondo)
 
     response = jsonify(response_data)
     return response
@@ -57,6 +57,17 @@ def post_to_webhook():
     response = request.post('https://boletos.onrender.com/webhook', json=data, headers=headers)
     return "ok"
 
+@app.route('/boleto/<codigo>')
+def boleto(codigo):
+    data={
+        'imagen': 'Rodrigo',
+        'codigo': codigo
+    }
+    return render_template('contacto.html',data=data)
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
+
+
+
 
