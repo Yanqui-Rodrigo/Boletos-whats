@@ -65,6 +65,11 @@ def boleto(codigo):
     }
     return render_template('contacto.html',data=data)
 
+@app.route('/boleto/img/<codigo>.png')
+def mostrar_imagen(codigo):
+    return app.send_static_file('images/'+codigo+'.png')
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
 
